@@ -4,6 +4,7 @@ from matplotlib import pyplot as plt
 import math
 b=255
 a=0
+
 def contrast(name):
     fig,axs=plt.subplots(1,4)
     img1=cv2.imread(name, cv2.IMREAD_GRAYSCALE)
