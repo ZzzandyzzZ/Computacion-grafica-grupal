@@ -2,7 +2,7 @@ import cv2 as cv
 import numpy as np
 from matplotlib import pyplot as plt
 import math
-def logaritmo(inp,constante,res):
+def logaritmo(inp,constante):
     f,c=inp.shape
     for i in range(f):
         for j in range(c):
@@ -13,7 +13,7 @@ def logaritmo(inp,constante,res):
                 inp[i][j]=255
             else:
                 inp[i][j]=r
-    cv.imshow(res,inp)
+    cv.imshow('res',inp)
 def raiz(inp,constante):
     f,c=inp.shape
     for i in range(f):
@@ -27,12 +27,11 @@ def raiz(inp,constante):
                 inp[i][j]=r
     cv.imshow('res2',inp)
 
-a = cv.imread('tierra.jpg',0)
-logaritmo(a,70,'res1')
-b = cv.imread('tierra.jpg',0)
-logaritmo(b,100,'res2')
-c = cv.imread('tierra.jpg',0)
-logaritmo(c,120,'res3')
+a = cv.imread('espacio.jpg',0)
+logaritmo(a,150)
+b = cv.imread('espacio.jpg',0)
+raiz(b,50)
+
 
 
 
