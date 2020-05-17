@@ -31,7 +31,3 @@ a = cv.imread('espacio.jpg',0)
 logaritmo(a,150)
 b = cv.imread('espacio.jpg',0)
 raiz(b,50)
-
-
-
-
