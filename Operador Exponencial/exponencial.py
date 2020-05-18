@@ -16,9 +16,26 @@ def exponencial(inp,bconst,constante,res):
     cv.imshow(res,inp)
 
     
-a = cv.imread('men2.jpg',0)
-exponencial(a,1.01,20,'res1')
-exponencial(a,1.05,10,'res2')
-exponencial(a,1.1,5,'res3')
+    
+def rtopowe(inp,constant, rconstant,res):
+    f,c=inp.shape
+    for i in range(f):
+        for j in range(c):
+            g=constant*(pow(inp[i][j],rconstant))
+            if(g<0):
+                inp[i][j]=0
+            elif(g>255):
+                inp[i][j]=255
+            else:
+                inp[i][j]=g
+    cv.imshow(res,inp)
+
+    
+a = cv.imread('exp_5.jpg',0)
+b=cv.imread('exp_5.jpg',0)
+#exponencial(a,1.01,20,'res1')
+#exponencial(a,1.01,10,'res2')
+exponencial(b,1.01,10,'res3')
+rtopowe(a,0.05,1.5,'x')
 
 
