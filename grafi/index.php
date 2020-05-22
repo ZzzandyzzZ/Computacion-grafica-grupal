@@ -45,6 +45,7 @@
     		<button class="btn btn-outline-success" type="button" onclick="proceso(2)">Op. Exponencial</button>
     		<button class="btn btn-outline-success" type="button" onclick="proceso(4)">Op. Logaritmico</button>
     		<button class="btn btn-outline-success" type="button" onclick="proceso(5)">Op. raiz</button>
+        <button class="btn btn-outline-success" type="button" onclick="proceso(6)">Raice to power</button>
     		<button class="btn btn-outline-success" type="button" onclick="proceso(7)">Contrast Stretching</button>
     		<button class="btn btn-outline-success" type="button" onclick="proceso(8)">Thresholding</button>
         <button class="btn btn-outline-success" type="button" onclick="casca()">Cascada</button>
