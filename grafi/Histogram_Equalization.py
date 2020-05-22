@@ -6,18 +6,13 @@ import math
 img = cv2.imread('uploads/original.jpg', cv2.IMREAD_GRAYSCALE)
 height, width = img.shape
 res = np.zeros((height,width),np.uint8)
-sh = height//3
-sw = width//3
-simg = np.zeros((sh,sw),np.uint8)
-
-for i in range(sh):
-    for j in range(sw):
-        simg[i][j] = img[i+sh][j+sw]
+simg=cv2.imread('uploads/recorte.jpg',cv2.IMREAD_GRAYSCALE)
 
 histS = cv2.calcHist([simg], [0], None, [256], [0, 256])
 hist = cv2.calcHist([img], [0], None, [256], [0, 256])
 
-t=sh*sw
+h,w=simg.shape
+t=h*w
 l=256
 p=[]
 for i in range(l):
