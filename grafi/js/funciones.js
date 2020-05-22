@@ -10,3 +10,13 @@ function proceso($tipo) {
                 }
         });
 }
+function casca() {
+        $.ajax({
+                type: 'POST',
+                url: 'cascada.php',
+                data: dataString,
+                success: function (html) {
+                        $("#divid").load(" #divid");
+                }
+        });
+}

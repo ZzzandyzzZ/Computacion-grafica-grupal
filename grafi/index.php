@@ -47,6 +47,7 @@
     		<button class="btn btn-outline-success" type="button" onclick="proceso(5)">Op. raiz</button>
     		<button class="btn btn-outline-success" type="button" onclick="proceso(7)">Contrast Stretching</button>
     		<button class="btn btn-outline-success" type="button" onclick="proceso(8)">Thresholding</button>
+        <button class="btn btn-outline-success" type="button" onclick="casca()">Cascada</button>
 
 		</form>
 	</nav>
@@ -70,7 +71,7 @@
     <input type="button" id="boton_de_recorte" value="Recortar" >
     <p>&nbsp;</p>
    </div>
-   
+
      <center>
   <figure>
     <div id="divid">
@@ -79,14 +80,14 @@
             if(file_exists("uploads/original.jpg")){
               echo '<img src="uploads/original.jpg?'.rand().'" id="mi_imagen" alt="">';
             }
-          ?> 
-     </div>  
+          ?>
+     </div>
       </figure>
   </center>
-  
+
   <div class="swiper-container">
     <div class="swiper-wrapper">
-     
+
       <div class="swiper-slide">
         <div class="swiper-zoom-container">
 				<?php
@@ -96,16 +97,16 @@
 				?>
         </div>
       </div>
-      
+
       <?php
 
             if(file_exists("uploads/original.jpg")){
               echo '<div class="swiper-slide">
-              <div class="swiper-zoom-container"> 
-              <img src="uploads/recorte.jpg?'.rand().'" id="mi_imagen" alt=""> 
+              <div class="swiper-zoom-container">
+              <img src="uploads/recorte.jpg?'.rand().'" id="mi_imagen" alt="">
                 </div> </div>';
             }
-          ?>  
+          ?>
 
       <div class="swiper-slide">
         <div class="swiper-zoom-container">
