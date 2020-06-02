@@ -1,11 +1,11 @@
 $(document).ready(function() {
-    $(".upload").on('click', function() {
-    	let timestamp = Math.floor( Date.now() );
+    $(".upload2").on('click', function() {
+        let timestamp = Math.floor( Date.now() );
         var formData = new FormData();
-        var files = $('#image')[0].files[0];
+        var files = $('#image2')[0].files[0];
         formData.append('file',files);
         $.ajax({
-            url: 'upload.php',
+            url: 'upload2.php',
             type: 'post',
             data: formData,
             contentType: false,
@@ -24,7 +24,6 @@ $(document).ready(function() {
     });
 
 
-
-
+    
+    
 });
-

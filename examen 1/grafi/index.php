@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/ajax.js"></script>
+	<script type="text/javascript" src="js/ajax2.js"></script>
 	<script type="text/javascript" src="js/funciones.js"></script>
   <link rel='stylesheet' href='css/imgareaselect-animated.css'>
   <link rel='stylesheet' href='css/imgareaselect-default.css'>
@@ -49,6 +50,9 @@
     		<button class="btn btn-outline-success" type="button" onclick="proceso(7)">Contrast Stretching</button>
     		<button class="btn btn-outline-success" type="button" onclick="proceso(8)">Thresholding</button>
         <button class="btn btn-outline-success" type="button" onclick="casca()">Cascada</button>
+        <button class="btn btn-outline-success" type="button" onclick="proceso(9)">Suma</button>
+        <button class="btn btn-outline-success" type="button" onclick="proceso(10)">Suma Color</button>
+        <button class="btn btn-outline-success" type="button" onclick="proceso(11)">Resta</button>
 
 		</form>
 	</nav>
@@ -63,6 +67,18 @@
 			<label class="custom-file-label" for="image">Escoga un archivo</label>
 		</div>
 	</div>
+
+	</form>
+	<form enctype="multipart/form-data" action="#" method="POST">
+	<div class="input-group mb-3">
+		<div class="input-group-prepend">
+			<button class="btn btn-outline-secondary upload2" type="submit" >Subir</button>
+		</div>
+		<div class="custom-file">
+			<input type="file" class="custom-file-input" id="image2" name="image2">
+			<label class="custom-file-label" for="image2">Escoga un segundo archivo</label>
+		</div>
+	</div>
 	</form>
 	</div>
 
@@ -72,6 +88,8 @@
     <input type="button" id="boton_de_recorte" value="Recortar" >
     <p>&nbsp;</p>
    </div>
+
+
 
      <center>
   <figure>
@@ -83,7 +101,19 @@
             }
           ?>
      </div>
-      </figure>
+	      </figure>
+	<figure>
+	    <div id="divid">
+	        <?php
+
+	            if(file_exists("uploads/suma.jpg")){
+	              echo '<img src="uploads/suma.jpg?'.rand().'" id="mi_imagen" alt="">';
+	            }
+	          ?>
+	     </div>
+	      </figure>
+
+
   </center>
 
   <div class="swiper-container">
@@ -99,6 +129,7 @@
         </div>
       </div>
 
+      
       <?php
 
             if(file_exists("uploads/original.jpg")){

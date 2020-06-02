@@ -31,3 +31,16 @@
 		$command = escapeshellcmd('Thresholding.py');
 		$output = Shell_exec($command);
 	}
+	if($_POST['1']=='9'){
+		$command = escapeshellcmd('suma.py');
+		$output = Shell_exec($command);
+	}
+	if($_POST['1']=='10'){
+		$command = escapeshellcmd('sumacolor.py');
+		$output = Shell_exec($command);
+	}
+
+	if($_POST['1']=='11'){
+		$command = escapeshellcmd('resta.py');
+		$output = Shell_exec($command);
+	}

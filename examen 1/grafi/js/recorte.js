@@ -28,6 +28,7 @@ var x1 = 0, y1 = 0, x2 = 0, y2 = 0, anchura = 0, altura = 0;
 					'imagen':'uploads/original.jpg'
 				},
 				success:function(){
+					
 					$('#zona_de_recorte').html('');
 					var r = Math.random();
 					var recorte = '<img src="uploads/recorte.jpg?' + r + '" alt="" border="0">';
