@@ -44,3 +44,21 @@
 		$command = escapeshellcmd('resta.py');
 		$output = Shell_exec($command);
 	}
+
+	if($_POST['1']=='12'){
+		$command = escapeshellcmd('mult1.py');
+		$output = Shell_exec($command);
+	}
+	if($_POST['1']=='13'){
+		$command = escapeshellcmd('diviescala.py');
+		$output = Shell_exec($command);
+	}
+
+	if($_POST['1']=='14'){
+		$command = escapeshellcmd('divimovi.py');
+		$output = Shell_exec($command);
+	}
+	if($_POST['1']=='15'){
+		$command = escapeshellcmd('blending.py');
+		$output = Shell_exec($command);
+	}

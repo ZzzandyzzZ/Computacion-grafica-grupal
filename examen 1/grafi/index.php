@@ -53,6 +53,12 @@
         <button class="btn btn-outline-success" type="button" onclick="proceso(9)">Suma</button>
         <button class="btn btn-outline-success" type="button" onclick="proceso(10)">Suma Color</button>
         <button class="btn btn-outline-success" type="button" onclick="proceso(11)">Resta</button>
+        <button class="btn btn-outline-success" type="button" onclick="proceso(12)">Multiplicación</button>
+         <button class="btn btn-outline-success" type="button" onclick="proceso(13)">División y escalamiento</button>
+         <button class="btn btn-outline-success" type="button" onclick="proceso(14)">División para detectar movimiento</button>
+         <button class="btn btn-outline-success" type="button" onclick="proceso(15)">Blending</button>
+         
+
 
 		</form>
 	</nav>
