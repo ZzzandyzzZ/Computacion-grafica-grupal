@@ -7,4 +7,4 @@ f,c=img1.shape
 for i in range(f):
     for j in range(c):
         img3[i][j]=np.bitwise_and(img1[i][j], img2[i][j])
-cv2.imshow('res',img3)
+cv2.imwrite('uploads/resultado.jpg',img3)
