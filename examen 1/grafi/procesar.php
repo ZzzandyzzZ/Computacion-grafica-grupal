@@ -62,3 +62,15 @@
 		$command = escapeshellcmd('blending.py');
 		$output = Shell_exec($command);
 	}
+	if($_POST['1']=='16'){
+		$command = escapeshellcmd('logicoand.py');
+		$output = Shell_exec($command);
+	}
+	if($_POST['1']=='17'){
+		$command = escapeshellcmd('logicoor.py');
+		$output = Shell_exec($command);
+	}
+	if($_POST['1']=='18'){
+		$command = escapeshellcmd('logicoxor.py');
+		$output = Shell_exec($command);
+	}

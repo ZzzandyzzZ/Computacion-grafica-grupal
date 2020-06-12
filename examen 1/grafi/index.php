@@ -57,7 +57,10 @@
          <button class="btn btn-outline-success" type="button" onclick="proceso(13)">División y escalamiento</button>
          <button class="btn btn-outline-success" type="button" onclick="proceso(14)">División para detectar movimiento</button>
          <button class="btn btn-outline-success" type="button" onclick="proceso(15)">Blending</button>
-         
+         <button class="btn btn-outline-success" type="button" onclick="proceso(16)">AND</button>
+         <button class="btn btn-outline-success" type="button" onclick="proceso(17)">OR</button>
+         <button class="btn btn-outline-success" type="button" onclick="proceso(18)">XOR</button>
+
 
 
 		</form>
@@ -135,7 +138,7 @@
         </div>
       </div>
 
-      
+
       <?php
 
             if(file_exists("uploads/original.jpg")){
