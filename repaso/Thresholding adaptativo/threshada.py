@@ -26,4 +26,4 @@ for i in range(height):
         else:
             img_out[i][j]=0
 
-cv2.imwrite('v4.jpg',img_out)
+cv2.imshow('v4.jpg',img_out)
