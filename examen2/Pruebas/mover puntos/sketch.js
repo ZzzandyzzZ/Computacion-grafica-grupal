@@ -3,13 +3,85 @@ var height;
 let img;
 var point;
 var points;
+var arrayData= new Array();
+var archivoTxt=new XMLHttpRequest();
+var fileRuta ='puntos.txt';
+var values;
 function setup(){
-	width = 600;
-	height = 700;
+	width = 500;
+	height = 500;
 	var canvas=createCanvas(width,height);
 	canvas.parent("canvas");
+	LoadImage();
+	archivoTxt.open("GET",fileRuta,false);
+	archivoTxt.send(null);
+	p(archivoTxt);
+	values=archivoTxt.responseText;
+	values=values.split(',');
+	for (var i = 0; i < values.length; i++) {
+	   values[i]=parseInt(values[i]);
+	}
+	p(values);
+	points=[];
+	for(var i=0;i<values.length;i+=2){
+		points.push(new Point(values[i],values[i+1],30));
+	}
+ 	//console.log(points);
+}
+function WriteFile() 
+{
+   
+   out='';
+   for(var i=0;i<points.length;i++){
+		out+=(points[i].x+','+points[i].y);
+		if(i<points.length-1)out+=',';
+	}
+	p(out);
+	jQuery.ajax({
+		url:'update.php',
+		type:'post',
+		data:{values:out},
+		
+	}).done(function(resp){
+		p(resp);
+		
+	});
+   
+}
+
+function draw(){
+	image(img,0,0,width,height);
+	drawLines();
+	if (mouseIsPressed){
+		for(var i=0;i<points.length;i++){
+			if(points[i].clicked())
+				point=points[i];
+		}
+		if(point!=null){
+			point.y=mouseY;
+			point.x=mouseX;
+		}
+		WriteFile();
+	}
+	else{
+		point=null;
+		for(var i=0;i<points.length;i++){
+			points[i].desactive();
+		}
+	}
+	
+}
+function drawLines(){
+	stroke(0,0,120);
+	strokeWeight(4);
+	for(var i=0;i<points.length-1;i++){
+		line(points[i].x,points[i].y,points[i+1].x,points[i+1].y);
+	}
+	line(points[points.length-1].x,points[points.length-1].y,points[0].x,points[0].y);
+}
+function LoadImage(){
 	img=loadImage(
-		"1.png", 
+		"1.jpg", 
 		img => {image(img,0,0,width,height);}, 
 	    (event) => { 
 	      fill("red") 
@@ -17,26 +89,4 @@ function setup(){
 	      console.log(event); 
 	    } 
 	);
-	values=[10,10,200,200,300,300,400,400];
-	points=[];
-	for(var i=0;i<values.length;i+=2){
-		points.push(new Point(values[i],values[i+1],50));
-	}
-	console.log(points);
-	//point= new Point(100,100,50);
-    
-}
-
-function draw(){
-	
-	if (mouseIsPressed){
-		image(img,0,0,width,height)
-		
-		for(var i=0;i<points.length;i++){
-			points[i].clicked();
-		}
-	}
-	for(var i=0;i<points.length;i++){
-		points[i].draw();
-	}
 }
