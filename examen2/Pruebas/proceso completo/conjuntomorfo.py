@@ -70,31 +70,34 @@ def esquinas(img):
     corners = cv2.goodFeaturesToTrack(gray, 4, 0.01, 200)
     corners = np.int0(corners)
     f = open ('puntos.txt','w')
-    p1x=str(corners[0][0][0])
-    p2x=str(corners[1][0][0])
-    p3x=str(corners[2][0][0])
-    p4x=str(corners[3][0][0])
-    p1y=str(corners[0][0][1])
-    p2y=str(corners[1][0][1])
-    p3y=str(corners[2][0][1])
-    p4y=str(corners[3][0][1])
-    f.write(p1x)
+    h,w,c=img.shape
+    for i in range(4):
+        if int(corners[i][0][0]) > h/2 and int(corners[i][0][1] > w/2):
+            punto1=(corners[i][0][0],corners[i][0][1])
+     
+        elif int(corners[i][0][0]) > w/2 and int(corners[i][0][1] < h/2):
+            punto2=(corners[i][0][0],corners[i][0][1])
+            
+        elif int(corners[i][0][0]) < w/2 and int(corners[i][0][1] < h/2):
+            punto3=(corners[i][0][0],corners[i][0][1])
+        else:
+            punto4=(corners[i][0][0],corners[i][0][1])
+    f.write(str(punto1[0]))
     f.write(",")
-    f.write(p1y)
+    f.write(str(punto1[1]))
     f.write(",")
-    f.write(p2x)
+    f.write(str(punto2[0]))
     f.write(",")
-    f.write(p2y)
+    f.write(str(punto2[1]))
     f.write(",")
-    f.write(p3x)
+    f.write(str(punto3[0]))
     f.write(",")
-    f.write(p3y)
+    f.write(str(punto3[1]))
     f.write(",")
-    f.write(p4x)
+    f.write(str(punto4[0]))
     f.write(",")
-    f.write(p4y)
+    f.write(str(punto4[1]))
     f.close()
-
 
 
 
