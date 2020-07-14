@@ -3,6 +3,18 @@ from matplotlib import pyplot as plt
 import numpy as np
 import math as mt
 import sys
+def exponencialg(inp,bconst,constante):
+    f,c=inp.shape
+    for i in range(f):
+        for j in range(c):
+            r=constante*(pow(bconst,inp[i][j])-1)
+            if(r<0):
+                inp[i][j]=0
+            elif(r>255):
+                inp[i][j]=255
+            else:
+                inp[i][j]=r
+    return inp
 def dilation(img,kernel):
     f,c=img.shape
     img2=np.zeros((f,c),np.uint8)
@@ -61,15 +73,18 @@ def exponencial(inp,bconst,constante):
 def documento(img):
     #
     dst3=img
-    cv.imwrite('out.jpg',img)
+    cv.imwrite('uploads/original.jpg',img)
     #
-    img=cv.imread('out.jpg',0)
+    img=cv.imread('uploads/original.jpg',0)
     dst2=cv.adaptiveThreshold(img,255,cv.ADAPTIVE_THRESH_MEAN_C,cv.THRESH_BINARY,11,10)
     kernel=np.ones((3,3),np.uint8)
-    cv.imwrite('out2.jpg',dst2)
+    cv.imwrite('uploads/out2.jpg',dst2)
     #
     colorido=exponencial(dst3,1.01,20)
-    cv.imwrite('out3.jpg',colorido)
+    cv.imwrite('uploads/out3.jpg',colorido)
+    #
+    gris = exponencialg(img,1.01,20)
+    cv.imwrite('uploads/out4.jpg',gris)
 #documento
 #Imagen
 def imagen(img):
@@ -82,11 +97,13 @@ def imagen(img):
     kernel=np.ones((3,3),np.uint8)
     dst2=opening(dst2,kernel)
     dst2=erosion(dst2,kernel)
-    cv.imwrite('out2.jpg',dst2)
+    cv.imwrite('uploads/out2.jpg',dst2)
     #
     colorido=exponencial(dst3,1.01,20)
-    cv.imwrite('out3.jpg',colorido)
-
+    cv.imwrite('uploads/out3.jpg',colorido)
+    #
+    gris = exponencialg(img,1.01,20)
+    cv.imwrite('uploads/out4.jpg',gris)
 
 
 img = cv.imread('uploads/original.jpg')

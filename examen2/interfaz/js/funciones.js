@@ -24,6 +24,23 @@ function ocultar(){
   document.getElementById('img2').style.display = "none"
 }
 
+function filt1(){
+  document.getElementById('espImagen1').innerHTML=
+  "<img id='rotImg' width=100% src='uploads/out2.jpg?"+Math.random()+"' alt='Nature' class='responsive'>"
+}
+function filt2(){
+  document.getElementById('espImagen1').innerHTML=
+  "<img id='rotImg' width=100% src='uploads/out3.jpg?"+Math.random()+"' alt='Nature' class='responsive'>"
+}
+function filt3(){
+  document.getElementById('espImagen1').innerHTML=
+  "<img id='rotImg' width=100% src='uploads/out4.jpg?"+Math.random()+"' alt='Nature' class='responsive'>"
+}
+function filt4(){
+  document.getElementById('espImagen1').innerHTML=
+  "<img id='rotImg' width=100% src='uploads/original.jpg?"+Math.random()+"' alt='Nature' class='responsive'>"
+}
+
 function proceso($tipo) {
 	console.log('exitoooooo')
 	opcion = $tipo
