@@ -13,20 +13,20 @@ function setup(){
 	var canvas=createCanvas(width,height);
 	canvas.parent("canvas");
 	LoadImage("1.jpg");
+	loadTxt();
+	points=[];
+	for(var i=0;i<values.length;i+=2){
+		points.push(new Point(values[i],values[i+1],30));
+	}
+}
+function loadTxt(){
 	archivoTxt.open("GET",fileRuta,false);
 	archivoTxt.send(null);
-	p(archivoTxt);
 	values=archivoTxt.responseText;
 	values=values.split(',');
 	for (var i = 0; i < values.length; i++) {
 	   values[i]=parseInt(values[i]);
 	}
-	p(values);
-	points=[];
-	for(var i=0;i<values.length;i+=2){
-		points.push(new Point(values[i],values[i+1],30));
-	}
- 	//console.log(points);
 }
 function enderezar() 
 {
@@ -50,7 +50,6 @@ function enderezar()
 }
 
 function draw(){
-
 	image(img,0,0,width,height);
 	drawLines();
 	if (mouseIsPressed){
@@ -62,15 +61,13 @@ function draw(){
 			point.y=mouseY;
 			point.x=mouseX;
 		}
-		
 	}
 	else{
 		point=null;
 		for(var i=0;i<points.length;i++){
 			points[i].desactive();
 		}
-	}
-	
+	}	
 }
 function drawLines(){
 	stroke(0,0,120);
