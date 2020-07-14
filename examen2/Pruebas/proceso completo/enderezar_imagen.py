@@ -88,6 +88,18 @@ cv.imwrite("3.jpg",dst)
 plt.show()
 """
 #xd
+def exponencialg(inp,bconst,constante):
+    f,c=inp.shape
+    for i in range(f):
+        for j in range(c):
+            r=constante*(pow(bconst,inp[i][j])-1)
+            if(r<0):
+                inp[i][j]=0
+            elif(r>255):
+                inp[i][j]=255
+            else:
+                inp[i][j]=r
+    return inp
 def dilation(img,kernel):
     f,c=img.shape
     img2=np.zeros((f,c),np.uint8)
@@ -161,16 +173,11 @@ M = cv.getPerspectiveTransform(pts1,pts2)
 dst = cv.warpPerspective(img,M,(cols,rows))
 
 """
->>>>>>> origin/master
 plt.subplot(121),plt.imshow(img),plt.title('Input')
 plt.plot(pts1[:,0],pts1[:,1],'o',markersize=5)
 plt.subplot(122),plt.imshow(dst),plt.title('Output')
 plt.plot(pts2[:,0],pts2[:,1],'o',markersize=5)
 plt.show()
-<<<<<<< HEAD
-
-cv.imwrite("out.jpg",dst)
-=======
 """
 #documento
 def documento(img):
@@ -185,6 +192,9 @@ def documento(img):
     #
     colorido=exponencial(dst3,1.01,20)
     cv.imwrite('out3.jpg',colorido)
+    #
+    gris = exponencialg(img,1.01,20)
+    cv.imwrite('out4.jpg',gris)
 #documento
 #Imagen
 def imagen(img):
@@ -201,7 +211,12 @@ def imagen(img):
     #
     colorido=exponencial(dst3,1.01,20)
     cv.imwrite('out3.jpg',colorido)
+    #
+    gris = exponencialg(img,1.01,20)
+    cv.imwrite('out4.jpg',gris)
 #Imagen
 imagen(dst)
+
+
 
 
