@@ -55,19 +55,30 @@ def closing(img,kernel):
 
 
 def conjunto(img,kernel):
-    r=thresh(img)
-    r=dilation(r,kernel)
-    r=closing(r,kernel)
-    r=erosion(r,kernel)
-    r=opening(r,kernel)
-    r=dilation(r,kernel)
-    r=dilation(r,kernel)
-    r=dilation(r,kernel)
-    return r
+    # r=thresh(img)
+    # r=dilation(r,kernel)
+    # r=closing(r,kernel)
+    # r=erosion(r,kernel)
+    # r=opening(r,kernel)
+    # r=dilation(r,kernel)
+    # r=dilation(r,kernel)
+    # r=dilation(r,kernel)
+    # return r
+    ret,resul=cv2.threshold(img,108,255,cv2.THRESH_BINARY) #thresh
+    resul=cv2.dilate(resul,kernel,iterations=1)#dilation
+    resul=cv2.morphologyEx(resul,cv2.MORPH_CLOSE,kernel)#closing
+    resul=cv2.erode(resul,kernel,iterations=1)#erosion
+    resul=cv2.morphologyEx(resul,cv2.MORPH_OPEN,kernel)#opening
+    # resul=cv2.dilate(resul,kernel,iterations=1)#dilation
+    # resul=cv2.dilate(resul,kernel,iterations=1)#dilation
+    # resul=cv2.dilate(resul,kernel,iterations=1)#dilation
+    resul=cv2.dilate(resul,kernel,iterations=1)#dilation
+    resul=cv2.dilate(resul,kernel,iterations=1)#dilation
+    return resul
 
 def esquinas(img):
     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-    corners = cv2.goodFeaturesToTrack(gray, 4, 0.01, 200)
+    corners = cv2.goodFeaturesToTrack(gray, 4, 0.01, 250)
     corners = np.int0(corners)
     f = open ('puntos.txt','w')
     p1x=str(corners[0][0][0])
