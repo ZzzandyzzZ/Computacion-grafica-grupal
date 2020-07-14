@@ -160,12 +160,19 @@ pts2 = np.float32([[cols,rows],[cols,0],[0,0],[0,rows]])
 M = cv.getPerspectiveTransform(pts1,pts2)
 dst = cv.warpPerspective(img,M,(cols,rows))
 
+<<<<<<< HEAD
+=======
 """
+>>>>>>> origin/master
 plt.subplot(121),plt.imshow(img),plt.title('Input')
 plt.plot(pts1[:,0],pts1[:,1],'o',markersize=5)
 plt.subplot(122),plt.imshow(dst),plt.title('Output')
 plt.plot(pts2[:,0],pts2[:,1],'o',markersize=5)
 plt.show()
+<<<<<<< HEAD
+
+cv.imwrite("out.jpg",dst)
+=======
 """
 #documento
 def documento(img):
@@ -201,4 +208,5 @@ imagen(dst)
 
 
 
+>>>>>>> origin/master
 
