@@ -220,3 +220,7 @@ imagen(dst)
 
 
 
+for i in range(f):
+	for i range(c):
+		if(dst[i,j]==1):
+			copiar color() en dstnuevo
