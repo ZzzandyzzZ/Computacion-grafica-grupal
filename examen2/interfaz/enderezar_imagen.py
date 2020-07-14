@@ -3,103 +3,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 import math as mt
 import sys
-"""
-def oper(img,M,hei,wei):
-    X=[0,0]
-    h,w,c=img.shape
-    img_out=np.zeros((hei,wei,c),np.uint8)
-    iden=np.array([[M[1][1],M[1][0]],[M[0][1],M[0][0]]])
-    B=np.array([[M[1][2]],[M[0][2]]])
-    for i in range(hei):
-        for j in range(wei):
-            vector=np.array([[i],[j]])
-            Y=vector-B
-            X=cv.solve(iden,Y)
-            x=int(X[1][0][0])
-            y=int(X[1][1][0])
-            if(x<img_out.shape[0] and x>=0):
-                if(y<img_out.shape[1] and y>=0):
-                    img_out[i][j]=img[x][y]             
-    return img_out
-"""
-"""
-def oper(img,M,hei,wei):
-    X=[0,0]
-    h,w,c=img.shape
-    img_out=img.copy()
-    iden=np.array([[M[1][1],M[1][0]],[M[0][1],M[0][0]]])
-    B=np.array([[M[1][2]],[M[0][2]]])
-    for i in range(hei):
-        for j in range(wei-i):
-            vector=np.array([[i],[j]])
-            Y=vector-B
-            X=cv.solve(iden,Y)
-            x=int(X[1][0][0])
-            y=int(X[1][1][0])
-            if(x<img_out.shape[0] and x>=0):
-                if(y<img_out.shape[1] and y>=0):
-                    img_out[i][j]=img[x][y]
-            
-    return img_out
-img = cv.imread('a (5).jpg')
-rows,cols,ch = img.shape
-img =cv.resize(img,(cols,cols))
-print(rows,cols)
-#  250 126
-##pts1 = np.float32([[0,0],[0,124],[125,63]])
-##pts2 = np.float32([[30,30],[0,124],[125,63]])
-##pts1 = np.float32([[0,0],[0,124],[250,0]])
-##pts2 = np.float32([[30,30],[0,124],[250,0]])
-##pts1 = np.float32([[0,0],[0,63],[125,0]])
-##pts2 = np.float32([[30,30],[0,63],[125,0]])
-##pts1 = np.float32([[0,0],[250,126],[0,126]])
-##pts2 = np.float32([[30,30],[250,126],[0,126]])
 
-# 2040 2200
-pts1 = np.float32([[403,100],[1750,41],[30,2120]])
-pts2 = np.float32([[0,0],[1750,41],[0,2200]])
-
-
-##recorte=img.copy()
-##for i in range(cols):
-##    for j in range(cols-i):
-##        recorte[i,j]=[0]
-        
-M = cv.getAffineTransform(pts1,pts2)
-dst = cv.warpAffine(img,M,(cols,rows))
-#dst2 = oper(img,M,rows,cols)
-
-plt.subplot(131),plt.imshow(img),plt.title('Input')
-plt.plot(pts1[:,0],pts1[:,1],'o',markersize=5)
-plt.subplot(132),plt.imshow(dst),plt.title('open')
-plt.plot(pts2[:,0],pts2[:,1],'o',markersize=5)
-
-
-pts1 = np.float32([[0,0],[1750,41],[2200,2000]])
-pts2 = np.float32([[0,0],[2170,0],[2200,2000]])
-M = cv.getAffineTransform(pts1,pts2)
-dst = cv.warpAffine(dst,M,(cols,rows))
-
-
-
-plt.subplot(133),plt.imshow(dst),plt.title('pro')
-plt.plot(pts2[:,0],pts2[:,1],'o',markersize=5)
-cv.imwrite("3.jpg",dst)
-plt.show()
-"""
-#xd
-def exponencialg(inp,bconst,constante):
-    f,c=inp.shape
-    for i in range(f):
-        for j in range(c):
-            r=constante*(pow(bconst,inp[i][j])-1)
-            if(r<0):
-                inp[i][j]=0
-            elif(r>255):
-                inp[i][j]=255
-            else:
-                inp[i][j]=r
-    return inp
 def dilation(img,kernel):
     f,c=img.shape
     img2=np.zeros((f,c),np.uint8)
@@ -158,7 +62,7 @@ def exponencial(inp,bconst,constante):
 
 #xd
 
-img = cv.imread('1.jpg')
+img = cv.imread('uploads/original.jpg')
 img=cv.resize(img,(500,500))
 rows,cols,ch = img.shape
 #print(rows,cols)
@@ -172,23 +76,12 @@ pts2 = np.float32([[cols,rows],[cols,0],[0,0],[0,rows]])
 M = cv.getPerspectiveTransform(pts1,pts2)
 dst = cv.warpPerspective(img,M,(cols,rows))
 
-<<<<<<< HEAD
-
-=======
 """
->>>>>>> origin/master
 plt.subplot(121),plt.imshow(img),plt.title('Input')
-#plt.plot(pts1[:,0],pts1[:,1],'o',markersize=5)
+plt.plot(pts1[:,0],pts1[:,1],'o',markersize=5)
 plt.subplot(122),plt.imshow(dst),plt.title('Output')
-#plt.plot(pts2[:,0],pts2[:,1],'o',markersize=5)
+plt.plot(pts2[:,0],pts2[:,1],'o',markersize=5)
 plt.show()
-<<<<<<< HEAD
-"""
-
-cv.imwrite("out.jpg",dst)
-=======
-=======
->>>>>>> origin/master
 """
 #documento
 def documento(img):
@@ -203,17 +96,14 @@ def documento(img):
     #
     colorido=exponencial(dst3,1.01,20)
     cv.imwrite('out3.jpg',colorido)
-    #
-    gris = exponencialg(img,1.01,20)
-    cv.imwrite('out4.jpg',gris)
 #documento
 #Imagen
 def imagen(img):
     #
     dst3=img
-    cv.imwrite('out.jpg',img)
+    cv.imwrite('uploads/original.jpg',img)
     #
-    img=cv.imread('out.jpg',0)
+    img=cv.imread('uploads/original.jpg',0)
     dst2=cv.adaptiveThreshold(img,255,cv.ADAPTIVE_THRESH_MEAN_C,cv.THRESH_BINARY,11,10)
     kernel=np.ones((3,3),np.uint8)
     dst2=opening(dst2,kernel)
@@ -222,9 +112,6 @@ def imagen(img):
     #
     colorido=exponencial(dst3,1.01,20)
     cv.imwrite('out3.jpg',colorido)
-    #
-    gris = exponencialg(img,1.01,20)
-    cv.imwrite('out4.jpg',gris)
 #Imagen
 imagen(dst)
 

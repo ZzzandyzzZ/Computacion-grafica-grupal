@@ -61,6 +61,12 @@ function draw(){
 			point.y=mouseY;
 			point.x=mouseX;
 		}
+<<<<<<< HEAD
+=======
+		
+		
+
+>>>>>>> origin/master
 	}
 	else{
 		point=null;
