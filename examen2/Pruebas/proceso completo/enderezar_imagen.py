@@ -160,8 +160,6 @@ pts2 = np.float32([[cols,rows],[cols,0],[0,0],[0,rows]])
 M = cv.getPerspectiveTransform(pts1,pts2)
 dst = cv.warpPerspective(img,M,(cols,rows))
 
-<<<<<<< HEAD
-=======
 """
 >>>>>>> origin/master
 plt.subplot(121),plt.imshow(img),plt.title('Input')
@@ -206,7 +204,4 @@ def imagen(img):
 #Imagen
 imagen(dst)
 
-
-
->>>>>>> origin/master
 
