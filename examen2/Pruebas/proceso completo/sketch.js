@@ -63,6 +63,8 @@ function draw(){
 			point.x=mouseX;
 		}
 		
+		
+
 	}
 	else{
 		point=null;
