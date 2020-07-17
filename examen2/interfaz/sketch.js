@@ -62,10 +62,10 @@ function enderezar()
           "<img id='rotImg' width=100% src='uploads/original.jpg?"+Math.random()+"' alt='Nature' class='responsive'>"
           document.getElementById('espImagen1').style.display = "block"
           document.getElementById('espDatos').innerHTML=
-          "<button type='button' class='btn btn-primary'>Filtro 1</button>\
-          <button type='button' class='btn btn-primary'>Filtro 2</button>\
-          <button type='button' class='btn btn-primary'>Filtro 3</button>\
-          <button type='button' class='btn btn-primary'>Filtro 4</button>\
+          "<button type='button' class='btn btn-primary' onclick='filt1()'>B/N</button>\
+          <button type='button' class='btn btn-primary' onclick='filt2()'>Color</button>\
+          <button type='button' class='btn btn-primary' onclick='filt3()'>Grises</button>\
+          <button type='button' class='btn btn-primary' onclick='filt4()'>Original</button>\
           <br>\
           <br>\
           <button type='button' class='btn btn-primary' onclick='girIzq()'>Girar Izquierda</button>\
