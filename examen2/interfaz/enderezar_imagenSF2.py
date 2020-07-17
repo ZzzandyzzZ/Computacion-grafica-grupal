@@ -168,5 +168,5 @@ plt.subplot(122),plt.imshow(dst),plt.title('Output')
 plt.plot(pts2[:,0],pts2[:,1],'o',markersize=5)
 plt.show()
 """
-imagen(dst)
+documento(dst)
 

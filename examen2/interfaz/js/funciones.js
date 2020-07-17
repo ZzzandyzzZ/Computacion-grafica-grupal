@@ -83,7 +83,8 @@ function proceso($tipo) {
           draw();
           document.getElementById('espDatos').innerHTML=
           "<center>\
-          <button type='button' class='btn btn-primary' onclick='enderezar()'>Procesar</button>\
+          <button type='button' class='btn btn-primary' onclick='enderezar()'>Procesar Img</button>\
+          <button type='button' class='btn btn-primary' onclick='enderezar2()'>Procesar Documento</button>\
           </center>";
       },
       success: function(data){

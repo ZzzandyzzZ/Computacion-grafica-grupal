@@ -75,6 +75,66 @@ function enderezar()
 
 }
 
+function enderezar2()
+{
+	value=0
+   p("ENDEREZANDO");
+   out='';
+   for(var i=0;i<points.length;i++){
+		out+=(parseInt(points[i].x)+','+parseInt(points[i].y));
+		if(i<points.length-1)out+=',';
+	}
+	p(out);
+	jQuery.ajax({
+		url:'upload5.php',
+		type:'post',
+		data:{values:out},
+
+	beforeSend: function(){
+          /*
+          * Esta función se ejecuta durante el envió de la petición al
+          * servidor.
+          * */
+          // btnEnviar.text("Enviando"); Para button
+          document.getElementById('canvas').style.display = "none"
+          document.getElementById('cargando').style.display = "block"
+      },
+      complete:function(data){
+          /*
+          * Se ejecuta al termino de la petición
+          * */
+          console.log('Puntos')
+          document.getElementById('cargando').style.display = "none"
+          document.getElementById('espImagen1').innerHTML=
+          "<img id='rotImg' width=100% src='uploads/original.jpg?"+Math.random()+"' alt='Nature' class='responsive'>"
+          document.getElementById('espImagen1').style.display = "block"
+          document.getElementById('espDatos').innerHTML=
+          "<button type='button' class='btn btn-primary' onclick='filt1()'>B/N</button>\
+          <button type='button' class='btn btn-primary' onclick='filt2()'>Color</button>\
+          <button type='button' class='btn btn-primary' onclick='filt3()'>Grises</button>\
+          <button type='button' class='btn btn-primary' onclick='filt4()'>Original</button>\
+          <br>\
+          <br>\
+          <button type='button' class='btn btn-primary' onclick='girIzq()'>Girar Izquierda</button>\
+          <button type='button' class='btn btn-primary' onclick='girDer()'>Girar Derecha</button>\
+          "
+      },
+      success: function(data){
+          /*
+          * Se ejecuta cuando termina la petición y esta ha sido
+          * correcta
+          * */
+      },
+      error: function(data){
+          /*
+          * Se ejecuta si la peticón ha sido erronea
+          * */
+          alert("Problemas al tratar de enviar el formulario");
+      }
+  });
+
+}
+
 function datoss(){
 	LoadImage("uploads/original.jpg");
 	archivoTxt.open("GET",fileRuta,false);
@@ -137,7 +197,7 @@ function draw(){
 			points[i].desactive();
 		}
 	}
-	
+
 
 }
 function drawLines(){
