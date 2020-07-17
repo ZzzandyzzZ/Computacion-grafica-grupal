@@ -70,41 +70,55 @@ def exponencial(inp,bconst,constante):
             else:
                 inp[i][j][2]=r3
     return inp
+#documento
+
+def colorear(imgb,imgc):
+    f,c=imgb.shape
+    imgb=cv.cvtColor(imgb,cv.COLOR_GRAY2RGB)
+    for i in range(f):
+        for j in range(c):
+            if(imgb[i][j][0]==0 and imgb[i][j][1]==0 and imgb[i][j][2]==0):
+                imgb[i][j][0]=imgc[i][j][0]
+                imgb[i][j][1]=imgc[i][j][1]
+                imgb[i][j][2]=imgc[i][j][2]
+    return imgb
+def escala_grises(img):
+    f,c,color=img.shape
+    for i in range(f):
+        for j in range(c):
+            promedio=(int(img[i][j][0])+int(img[i][j][1])+int(img[i][j][2]))/3
+            img[i][j]=promedio
+    return img
 def documento(img):
     #
-    dst3=img
     cv.imwrite('uploads/original.jpg',img)
     #
-    img=cv.imread('uploads/original.jpg',0)
-    dst2=cv.adaptiveThreshold(img,255,cv.ADAPTIVE_THRESH_MEAN_C,cv.THRESH_BINARY,11,10)
-    kernel=np.ones((3,3),np.uint8)
+    img2=cv.imread('uploads/original.jpg',0)
+    dst2=cv.adaptiveThreshold(img2,255,cv.ADAPTIVE_THRESH_MEAN_C,cv.THRESH_BINARY,11,10)
     cv.imwrite('uploads/out2.jpg',dst2)
     #
-    colorido=exponencial(dst3,1.01,20)
+    colorido=colorear(dst2,img)
     cv.imwrite('uploads/out3.jpg',colorido)
     #
-    gris = exponencialg(img,1.01,20)
+    gris = escala_grises(colorido)
     cv.imwrite('uploads/out4.jpg',gris)
-#documento
-#Imagen
+
 def imagen(img):
     #
-    dst3=img
     cv.imwrite('uploads/original.jpg',img)
     #
-    img=cv.imread('uploads/original.jpg',0)
-    dst2=cv.adaptiveThreshold(img,255,cv.ADAPTIVE_THRESH_MEAN_C,cv.THRESH_BINARY,11,10)
+    img2=cv.imread('uploads/original.jpg',0)
+    dst2=cv.adaptiveThreshold(img2,255,cv.ADAPTIVE_THRESH_MEAN_C,cv.THRESH_BINARY,11,10)
     kernel=np.ones((3,3),np.uint8)
     dst2=opening(dst2,kernel)
     dst2=erosion(dst2,kernel)
     cv.imwrite('uploads/out2.jpg',dst2)
     #
-    colorido=exponencial(dst3,1.01,20)
+    colorido=colorear(dst2,img)
     cv.imwrite('uploads/out3.jpg',colorido)
     #
-    gris = exponencialg(img,1.01,20)
+    gris = escala_grises(colorido)
     cv.imwrite('uploads/out4.jpg',gris)
-
 
 img = cv.imread('uploads/original.jpg')
 img=cv.resize(img,(500,500))
