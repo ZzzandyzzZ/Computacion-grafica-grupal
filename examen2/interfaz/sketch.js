@@ -6,27 +6,14 @@ var points;
 var arrayData= new Array();
 var archivoTxt=new XMLHttpRequest();
 var fileRuta ='puntos.txt';
-var values;
+var valuestxt;
+var values=[];
 function setup(){
 	width = 500
 	height = 500;
 	var canvas=createCanvas(width,height);
 	canvas.parent("canvas");
-	LoadImage("uploads/original.jpg");
-	archivoTxt.open("GET",fileRuta,false);
-	archivoTxt.send(null);
-	p(archivoTxt);
-	values=archivoTxt.responseText;
-	values=values.split(',');
-	for (var i = 0; i < values.length; i++) {
-	   values[i]=parseInt(values[i]);
-	}
-	p(values);
-	points=[];
-	for(var i=0;i<values.length;i+=2){
-		points.push(new Point(values[i],values[i+1],30));
-	}
- 	//console.log(points);
+	datoss();
 }
 function enderezar()
 {
@@ -92,12 +79,36 @@ function datoss(){
 	LoadImage("uploads/original.jpg");
 	archivoTxt.open("GET",fileRuta,false);
 	archivoTxt.send(null);
-	p(archivoTxt);
-	values=archivoTxt.responseText;
-	values=values.split(',');
-	for (var i = 0; i < values.length; i++) {
-	   values[i]=parseInt(values[i]);
+	valuestxt=archivoTxt.responseText;
+	valuestxt=valuestxt.split(',');
+	p(valuestxt);
+	for (var i = 0; i < valuestxt.length; i++) {
+	   valuestxt[i]=parseInt(valuestxt[i]);
 	}
+	p("DESORDENADO");
+	p(valuestxt);
+	values.length=valuestxt.length;
+	p(values);
+	for (var i = 0; i < valuestxt.length; i+=2){
+	    if ((valuestxt[i] >height/2) && (valuestxt[i+1]>width/2)){
+	        values[0]=valuestxt[i];
+	        values[1]=valuestxt[i+1];
+	    }
+	    else if ((valuestxt[i] >height/2) && (valuestxt[i+1]<width/2)){
+	        values[2]=valuestxt[i];
+	        values[3]=valuestxt[i+1];
+	    }
+	    else if ((valuestxt[i] <height/2) && (valuestxt[i+1]<width/2)){
+	        values[4]=valuestxt[i];
+	        values[5]=valuestxt[i+1];
+	    }
+	    else{
+	        values[6]=valuestxt[i];
+	        values[7]=valuestxt[i+1];
+	    }
+	    p(values);
+	}
+	p("ORDENADO");
 	p(values);
 	points=[];
 	for(var i=0;i<values.length;i+=2){
@@ -126,6 +137,7 @@ function draw(){
 			points[i].desactive();
 		}
 	}
+	
 
 }
 function drawLines(){
