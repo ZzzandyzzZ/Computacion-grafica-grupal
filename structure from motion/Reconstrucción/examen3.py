@@ -5,7 +5,6 @@ import cv2
 from camera import Camera
 
 
-#################STRUCTURE##################
 def reconstruct_points(p1, p2, m1, m2):
     num_points = p1.shape[1]
     res = np.ones((4, num_points))
@@ -17,10 +16,7 @@ def reconstruct_points(p1, p2, m1, m2):
 
 
 def reconstruct_one_point(pt1, pt2, m1, m2):
-    """
-        pt1 and m1 * X are parallel and cross product = 0
-        pt1 x m1 * X  =  pt2 x m2 * X  =  0
-    """
+
     A = np.vstack([
         np.dot(skew(pt1), m1),
         np.dot(skew(pt2), m2)
@@ -32,13 +28,7 @@ def reconstruct_one_point(pt1, pt2, m1, m2):
 
 
 def linear_triangulation(p1, p2, m1, m2):
-    """
-    Linear triangulation (Hartley ch 12.2 pg 312) to find the 3D point X
-    where p1 = m1 * X and p2 = m2 * X. Solve AX = 0.
-    :param p1, p2: 2D points in homo. or catesian coordinates. Shape (3 x n)
-    :param m1, m2: Camera matrices associated with p1 and p2. Shape (3 x 4)
-    :returns: 4 x n homogenous 3d triangulated points
-    """
+
     num_points = p1.shape[1]
     res = np.ones((4, num_points))
 
@@ -58,42 +48,29 @@ def linear_triangulation(p1, p2, m1, m2):
 
 
 def compute_epipole(F):
-    """ Computes the (right) epipole from a
-        fundamental matrix F.
-        (Use with F.T for left epipole.)
-    """
-    # return null space of F (Fx=0)
     U, S, V = np.linalg.svd(F)
     e = V[-1]
     return e / e[2]
 
 
 def plot_epipolar_lines(p1, p2, F, show_epipole=False):
-    """ Plot the points and epipolar lines. P1' F P2 = 0 """
     plt.figure()
     plt.suptitle('Epipolar lines', fontsize=16)
 
     plt.subplot(1, 2, 1, aspect='equal')
-    # Plot the epipolar lines on img1 with points p2 from the right side
-    # L1 = F * p2
     plot_epipolar_line(p1, p2, F, show_epipole)
     plt.subplot(1, 2, 2, aspect='equal')
-    # Plot the epipolar lines on img2 with points p1 from the left side
-    # L2 = F' * p1
+
     plot_epipolar_line(p2, p1, F.T, show_epipole)
 
 
 def plot_epipolar_line(p1, p2, F, show_epipole=False):
-    """ Plot the epipole and epipolar line F*x=0
-        in an image given the corresponding points.
-        F is the fundamental matrix and p2 are the point in the other image.
-    """
+
     lines = np.dot(F, p2)
     pad = np.ptp(p1, 1) * 0.01
     mins = np.min(p1, 1)
     maxes = np.max(p1, 1)
 
-    # epipolar line parameter and values
     xpts = np.linspace(mins[0] - pad[0], maxes[0] + pad[0], 100)
     for line in lines.T:
         ypts = np.asarray([(line[2] + line[0] * p) / (-line[1]) for p in xpts])
@@ -107,11 +84,7 @@ def plot_epipolar_line(p1, p2, F, show_epipole=False):
 
 
 def skew(x):
-    """ Create a skew symmetric matrix *A* from a 3d vector *x*.
-        Property: np.cross(A, v) == np.dot(x, v)
-    :param x: 3d vector
-    :returns: 3 x 3 skew symmetric matrix from *x*
-    """
+
     return np.array([
         [0, -x[2], x[1]],
         [x[2], 0, -x[0]],
@@ -120,14 +93,10 @@ def skew(x):
 
 
 def compute_P(p2d, p3d):
-    """ Compute camera matrix from pairs of
-        2D-3D correspondences in homog. coordinates.
-    """
     n = p2d.shape[1]
     if p3d.shape[1] != n:
-        raise ValueError('Number of points do not match.')
+        raise ValueError('Tamaños incorrectos')
 
-    # create matrix for DLT solution
     M = np.zeros((3 * n, 12 + n))
     for i in range(n):
         M[3 * i, 0:4] = p3d[:, i]
@@ -140,26 +109,21 @@ def compute_P(p2d, p3d):
 
 
 def compute_P_from_fundamental(F):
-    """ Compute the second camera matrix (assuming P1 = [I 0])
-        from a fundamental matrix.
-    """
+ 
     e = compute_epipole(F.T)  # left epipole
     Te = skew(e)
     return np.vstack((np.dot(Te, F.T).T, e)).T
 
 
 def compute_P_from_essential(E):
-    """ Compute the second camera matrix (assuming P1 = [I 0])
-        from an essential matrix. E = [t]R
-    :returns: list of 4 possible camera matrices.
-    """
+
     U, S, V = np.linalg.svd(E)
 
-    # Ensure rotation matrix are right-handed with positive determinant
+
     if np.linalg.det(np.dot(U, V)) < 0:
         V = -V
 
-    # create 4 possible camera matrices (Hartley p 258)
+ 
     W = np.array([[0, -1, 0], [1, 0, 0], [0, 0, 1]])
     P2s = [np.vstack((np.dot(U, np.dot(W, V)).T, U[:, 2])).T,
           np.vstack((np.dot(U, np.dot(W, V)).T, -U[:, 2])).T,
@@ -187,32 +151,22 @@ def correspondence_matrix(p1, p2):
 
 
 def compute_image_to_image_matrix(x1, x2, compute_essential=False):
-    """ Compute the fundamental or essential matrix from corresponding points
-        (x1, x2 3*n arrays) using the 8 point algorithm.
-        Each row in the A matrix below is constructed as
-        [x'*x, x'*y, x', y'*x, y'*y, y', x, y, 1]
-    """
+
     A = correspondence_matrix(x1, x2)
-    # compute linear least square solution
+
     U, S, V = np.linalg.svd(A)
     F = V[-1].reshape(3, 3)
 
-    # constrain F. Make rank 2 by zeroing out last singular value
     U, S, V = np.linalg.svd(F)
     S[-1] = 0
     if compute_essential:
-        S = [1, 1, 0] # Force rank 2 and equal eigenvalues
+        S = [1, 1, 0] 
     F = np.dot(U, np.dot(np.diag(S), V))
 
     return F
 
 
 def scale_and_translate_points(points):
-    """ Scale and translate image points so that centroid of the points
-        are at the origin and avg distance to the origin is equal to sqrt(2).
-    :param points: array of homogenous point (3 x n)
-    :returns: array of same input shape and its normalization matrix
-    """
     x = points[0]
     y = points[1]
     center = points.mean(axis=1)  # mean of each row
@@ -230,24 +184,15 @@ def scale_and_translate_points(points):
 
 
 def compute_normalized_image_to_image_matrix(p1, p2, compute_essential=False):
-    """ Computes the fundamental or essential matrix from corresponding points
-        using the normalized 8 point algorithm.
-    :input p1, p2: corresponding points with shape 3 x n
-    :returns: fundamental or essential matrix with shape 3 x 3
-    """
     n = p1.shape[1]
     if p2.shape[1] != n:
         raise ValueError('Number of points do not match.')
 
-    # preprocess image coordinates
     p1n, T1 = scale_and_translate_points(p1)
     p2n, T2 = scale_and_translate_points(p2)
 
-    # compute F or E with the coordinates
     F = compute_image_to_image_matrix(p1n, p2n, compute_essential)
 
-    # reverse preprocessing of coordinates
-    # We know that P1' E P2 = 0
     F = np.dot(T1.T, np.dot(F, T2))
 
     return F / F[2, 2]
@@ -261,16 +206,7 @@ def compute_essential_normalized(p1, p2):
     return compute_normalized_image_to_image_matrix(p1, p2, compute_essential=True)
 
 
-#########################################################
-
-#################PROCESSOR###############################
 def read_matrix(path, astype=np.float64):
-    """ Reads a file containing a matrix where each line represents a point
-        and each point is tab or space separated. * are replaced with -1.
-    :param path: path to the file
-    :parama astype: type to cast the numbers. Default: np.float64
-    :returns: array of array of numbers
-    """
     with open(path, 'r') as f:
         arr = []
         for line in f:
@@ -280,48 +216,32 @@ def read_matrix(path, astype=np.float64):
 
 
 def cart2hom(arr):
-    """ Convert catesian to homogenous points by appending a row of 1s
-    :param arr: array of shape (num_dimension x num_points)
-    :returns: array of shape ((num_dimension+1) x num_points) 
-    """
     if arr.ndim == 1:
         return np.hstack([arr, 1])
     return np.asarray(np.vstack([arr, np.ones(arr.shape[1])]))
 
 
 def hom2cart(arr):
-    """ Convert homogenous to catesian by dividing each row by the last row
-    :param arr: array of shape (num_dimension x num_points)
-    :returns: array of shape ((num_dimension-1) x num_points) iff d > 1 
-    """
-    # arr has shape: dimensions x num_points
     num_rows = len(arr)
     if num_rows == 1 or arr.ndim == 1:
         return arr
 
     return np.asarray(arr[:num_rows - 1] / arr[num_rows - 1])
 
-#########################################################
-
-###################FEATURES##############################
 
 def find_correspondence_points(img1, img2):
     sift = cv2.xfeatures2d.SIFT_create()
 
-    # find the keypoints and descriptors with SIFT
     kp1, des1 = sift.detectAndCompute(
         cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY), None)
     kp2, des2 = sift.detectAndCompute(
         cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY), None)
-
-    # Find point matches
     FLANN_INDEX_KDTREE = 0
     index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
     search_params = dict(checks=50)
     flann = cv2.FlannBasedMatcher(index_params, search_params)
     matches = flann.knnMatch(des1, des2, k=2)
 
-    # Apply Lowe's SIFT matching ratio test
     good = []
     for m, n in matches:
         if m.distance < 0.8 * n.distance:
@@ -330,11 +250,9 @@ def find_correspondence_points(img1, img2):
     src_pts = np.asarray([kp1[m.queryIdx].pt for m in good])
     dst_pts = np.asarray([kp2[m.trainIdx].pt for m in good])
 
-    # Constrain matches to fit homography
     retval, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 100.0)
-    mask = mask.ravel()
+    mask = mak.ravel()
 
-    # We select only inlier points
     pts1 = src_pts[mask == 1]
     pts2 = dst_pts[mask == 1]
 
@@ -342,14 +260,10 @@ def find_correspondence_points(img1, img2):
 
 
 
-##########################################################
-
-
-
-def dino():
-    # Dino
-    img1 = cv2.imread('dado1.jpg')
-    img2 = cv2.imread('dado2.jpg')
+def start():
+    
+    img1 = cv2.imread('cup (3).jpg')
+    img2 = cv2.imread('cup (6).jpg')
     pts1, pts2 = find_correspondence_points(img1, img2)
     points1 = cart2hom(pts1)
     points2 = cart2hom(pts2)
@@ -364,36 +278,36 @@ def dino():
     fig.show()
 
     height, width, ch = img1.shape
-    intrinsic = np.array([  # for dino
-        [2360, 0, width / 2],
-        [0, 2360, height / 2],
+    intrinsic = np.array([ 
+        [2000, 0, width / 2],
+        [0, 2000, height / 2],
         [0, 0, 1]])
 
     return points1, points2, intrinsic
 
+def writeTxt(name,points):
+    print("TAMAÑO",len(points))
+    f=open(name,"w")
+    for i in range(len(points[0])):
+        f.write(str(points[0][i])+","+str(points[1][i])+","+str(points[2][i])+","+"\n")
+    f.close()
 
-points1, points2, intrinsic = dino()
+points1, points2, intrinsic = start()
 
-# Calculate essential matrix with 2d points.
-# Result will be up to a scale
-# First, normalize points
 points1n = np.dot(np.linalg.inv(intrinsic), points1)
 points2n = np.dot(np.linalg.inv(intrinsic), points2)
 E = compute_essential_normalized(points1n, points2n)
 print('Computed essential matrix:', (-E / E[0][1]))
 
-# Given we are at camera 1, calculate the parameters for camera 2
-# Using the essential matrix returns 4 possible camera paramters
+s
 P1 = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0]])
 P2s = compute_P_from_essential(E)
 
 ind = -1
 for i, P2 in enumerate(P2s):
-    # Find the correct camera parameters
     d1 = reconstruct_one_point(
         points1n[:, 0], points2n[:, 0], P1, P2)
 
-    # Convert P2 from camera view to world view
     P2_homogenous = np.linalg.inv(np.vstack([P2, [0, 0, 0, 1]]))
     d2 = np.dot(P2_homogenous[:3, :4], d1)
 
@@ -401,7 +315,7 @@ for i, P2 in enumerate(P2s):
         ind = i
 
 P2 = np.linalg.inv(np.vstack([P2s[ind], [0, 0, 0, 1]]))[:3, :4]
-#tripoints3d = structure.reconstruct_points(points1n, points2n, P1, P2)
+
 tripoints3d = linear_triangulation(points1n, points2n, P1, P2)
 
 fig = plt.figure()
@@ -413,3 +327,6 @@ ax.set_ylabel('y axis')
 ax.set_zlabel('z axis')
 ax.view_init(elev=135, azim=90)
 plt.show()
+
+
+writeTxt("points.txt",tripoints3d)

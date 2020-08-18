@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Grupo 3</title>
+  </head>
+  <body>
+  	<div>
+	    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  			<a class="navbar-brand" href="#">Grupo 3</a>
+  			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    			<span class="navbar-toggler-icon"></span>
+  			</button>
+
+  			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    			<ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="#" onclick="proceso(6)">MejorarFotoConTexto</a>
+                <a class="nav-link" href="#" onclick="proceso(7)">Reconstruccion 2D</a>
+              </li>
+      				<li class="nav-item dropdown">
+        				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          					Op. Aritmeticos
+        				</a>
+        				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          					<a class="dropdown-item" href="#" onclick="proceso(1)">Adicion</a>
+          					<a class="dropdown-item" href="#" onclick="proceso(2)">Sustraccion</a>
+          					<a class="dropdown-item" href="#" onclick="proceso(3)">Multiplicacion</a>
+          					<a class="dropdown-item" href="#" onclick="proceso(4)">Division</a>
+          					<a class="dropdown-item" href="#" onclick="proceso(5)">Blending</a>
+        				</div>
+      				</li>
+      				<!--  -->
+      				<li class="nav-item dropdown">
+        				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          					Op. Binarios
+        				</a>
+        				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          					<a class="dropdown-item" href="#">AND</a>
+          					<a class="dropdown-item" href="#">OR</a>
+          					<a class="dropdown-item" href="#">XOR</a>
+        				</div>
+      				</li>
+    			</ul>
+      		<form enctype="multipart/form-data" action="#" method="POST">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary upload" type="submit">Subir</button>
+  				    </div>
+  				    <div class="custom-file">
+                <input type="file" class="custom-file-input" id="image" name="image">
+                <label class="custom-file-label" for="image">Escoga un archivo</label>
+  				    </div>
+            </div>
+          </form>
+          <form enctype="multipart/form-data" action="#" method="POST">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary upload2" type="submit">Subir</button>
+  				    </div>
+  				    <div class="custom-file">
+                <input type="file" class="custom-file-input" id="image2" name="image2">
+                <label class="custom-file-label" for="image2">Escoga un archivo</label>
+  				    </div>
+            </div>
+  		    </form>
+
+  		  </div>
+		  </nav>
+    </div>
+    <br>
+    <div class="container">
+		  <div class="row align-items-start">
+        <div class="col" id="espImagen1">
+				  <center>
+            <p>Suba una imagen</p>
+          </center>
+        </div>
+        <div class="col" id="espImagen2">
+				  <center>
+            <p>Suba una imagen</p>
+          </center>
+        </div>
+      </div>
+      <div class="row" style="display: block;"id="generarButon">
+        <button onclick="goo()" class="button">Generar 3D</button>
+      </div>
+		  <div class="row align-items-start">
+        <div class="col" id="render">
+
+        </div>
+        <div class="col" style="display: none;"id="cargando">
+          <img src="uploads/cargando.gif" width="100%">
+        </div>
+		  </div>
+    </div>
+    <div>
+
+    </div>
+
+    <script src="js/three.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="webGL.js"></script>
+    <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/ajax.js"></script>
+    <script type="text/javascript" src="js/formAjax.js"></script>
+    <script type="text/javascript" src="js/ajax2.js"></script>
+    <script type="text/javascript" src="js/funciones.js"></script>
+    <script type="text/javascript" src="p5.min.js"></script>
+  </body>
+</html>
